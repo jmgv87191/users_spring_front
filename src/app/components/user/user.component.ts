@@ -16,7 +16,7 @@ export class UserComponent {
 
   onRemoveUser( id:number ):void{
 
-    const confirmRemove = confirm('Esta seguro que desea eliminar?');
+    const confirmRemove = confirm('Esta seguro que desesssa eliminar?');
 
     if (confirmRemove) {
       this.idUserEventEmitter.emit(id)
