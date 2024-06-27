@@ -8,6 +8,8 @@
                 <th>apellido</th>
                 <th>email</th>
                 <th>username</th>
+                <th>remove</th>
+                <th>edit</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +24,12 @@
                         <button class="btn btn-danger btn-sm"
                         (click)="onRemoveUser(item.id)" >
                             Remove
+                        </button>
+                    </td>
+                    <td  > 
+                        <button class="btn btn-info btn-sm"
+                        (click)="onSelectedUSer(item)" >
+                            update
                         </button>
                     </td>
 
