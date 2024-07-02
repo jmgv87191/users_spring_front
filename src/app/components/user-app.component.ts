@@ -13,10 +13,11 @@ import Swal from 'sweetalert2';
 })
 export class UserAppComponent implements OnInit {
 
-  title: string = 'Listado de '
+  title: string = 'Listado de usuarios'
 
   users:User[] = [];
   userSelected:User;
+  open:boolean = false;
 
   constructor( private _userService:UserService ){ 
     this.userSelected = new User;
@@ -41,6 +42,7 @@ export class UserAppComponent implements OnInit {
     });
 
     this.userSelected = new User();
+    this.setOpen();
 
   }
 
@@ -68,7 +70,12 @@ export class UserAppComponent implements OnInit {
 
   setSelectedUsar(userRow:User):void{
     this.userSelected = {...userRow}
+    this.open = true;
   }
 
+
+  setOpen(){
+    this.open = !this.open
+  }
 
 }
