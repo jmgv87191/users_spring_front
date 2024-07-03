@@ -1,9 +1,9 @@
-<div class="modal" tabindex="-1" style="display: block;" >
+<div class="modal animacion fadeIn" tabindex="-1" style="display: block;" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"> Form {{ (user.id > 0)?'Update':'Create' }} user</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                <button (click)="onOpenClose()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
             <div class="modal-body">
 
@@ -126,7 +126,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="onOpenClose()"
+                >Close</button>
             </div>
         </div>
     </div>

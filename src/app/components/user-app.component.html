@@ -16,8 +16,9 @@
     </div>
 </div>
 @if (open) {
-
-    <app-user-form
-    [user]="userSelected"
-    (newUserEventEmitter)="addUser($event)" ></app-user-form>
+    <div class="abrir-modal animacion fadeIn">
+        <app-user-form
+        [user]="userSelected"
+        (newUserEventEmitter)="addUser($event)" (openEventEmitter)="setOpen()" ></app-user-form>
+    </div>
 }
