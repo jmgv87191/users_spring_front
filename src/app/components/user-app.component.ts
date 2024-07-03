@@ -4,21 +4,21 @@ import { UserService } from '../services/user.service';
 import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import Swal from 'sweetalert2';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-user-app',
   standalone: true,
-  imports: [ UserComponent, UserFormComponent ],
+  imports: [ UserComponent, UserFormComponent,RouterOutlet, NavbarComponent ],
   templateUrl: './user-app.component.html',
   styleUrls: ['./user-app.component.css']
 })
 export class UserAppComponent implements OnInit {
 
-  title: string = 'Listado de usuarios'
 
   users:User[] = [];
   userSelected:User;
-  open:boolean = false;
 
   constructor( private _userService:UserService ){ 
     this.userSelected = new User;
@@ -43,7 +43,6 @@ export class UserAppComponent implements OnInit {
     });
 
     this.userSelected = new User();
-    this.setOpen();
 
   }
 
@@ -71,12 +70,8 @@ export class UserAppComponent implements OnInit {
 
   setSelectedUsar(userRow:User):void{
     this.userSelected = {...userRow}
-    this.open = true;
   }
 
 
-  setOpen(){
-    this.open = !this.open
-  }
 
 }
