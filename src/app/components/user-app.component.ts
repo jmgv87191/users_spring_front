@@ -29,10 +29,14 @@ export class UserAppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._userService.findAll().subscribe(users => this.users = users)
+    this._userService.findAll().subscribe(users => this.users = users);
+    this.addUser();
+    this.setSelectedUser()
+    this.removeUser()
+
   }
 
-  addUser(user:User){
+  addUser(){
 
     this.sharingData.newUserEventEmitter.subscribe((user)=>{
 
@@ -54,33 +58,39 @@ export class UserAppComponent implements OnInit {
 
   }
 
-  removeUser( id: number ):void{
+  removeUser( ):void{
   
-    this.s
+    this.sharingData.idUserEventEmitter.subscribe(id=>{
 
-    Swal.fire({
-      title: "Seguro que desea eliminar?",
-      text: "Cuidado el dato del usuario sera eliminado del sistema!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "si!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.users = this.users.filter(user => user.id != id);
+      Swal.fire({
+        title: "Seguro que desea eliminar?",
+        text: "Cuidado el dato del usuario sera eliminado del sistema!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "si!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.users = this.users.filter(user => user.id != id);
+  
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Usuario eliminado con exito",
+            icon: "success"
+          });
+        }
+      });
+    })
 
-        Swal.fire({
-          title: "Eliminado!",
-          text: "Usuario eliminado con exito",
-          icon: "success"
-        });
-      }
-    });
+
+
   }
 
-  setSelectedUsar(userRow:User):void{
-    this.userSelected = {...userRow}
+  setSelectedUser():void{
+    this.sharingData.selectedUserEventEmitter.subscribe(userRow=>{
+      this.userSelected = {...userRow}
+    })
   }
 
 
