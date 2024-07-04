@@ -6,6 +6,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import Swal from 'sweetalert2';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SharingDataService } from '../services/sharing-data.service';
 
 @Component({
   selector: 'app-user-app',
@@ -20,7 +21,10 @@ export class UserAppComponent implements OnInit {
   users:User[] = [];
   userSelected:User;
 
-  constructor( private _userService:UserService ){ 
+  constructor( private _userService:UserService,
+              private sharingData: SharingDataService
+
+  ){ 
     this.userSelected = new User;
   }
 
