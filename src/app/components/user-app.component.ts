@@ -34,23 +34,30 @@ export class UserAppComponent implements OnInit {
 
   addUser(user:User){
 
-    if (user.id > 0 ) {
-      this.users = this.users.map( u => (u.id == user.id)? { ...user }: u)
-    }else{
-      this.users = [...this.users,{...user, id:new Date().getTime()}]
-    }
+    this.sharingData.newUserEventEmitter.subscribe((user)=>{
 
-    Swal.fire({
-      title: "Guardado!",
-      text: "Usuario guardado con exito!",
-      icon: "success"
-    });
+      if (user.id > 0 ) {
+        this.users = this.users.map( u => (u.id == user.id)? { ...user }: u)
+      }else{
+        this.users = [...this.users,{...user, id:new Date().getTime()}]
+      }
+  
+      Swal.fire({
+        title: "Guardado!",
+        text: "Usuario guardado con exito!",
+        icon: "success"
+      });
+    })
+
 
     this.userSelected = new User();
 
   }
 
   removeUser( id: number ):void{
+  
+    this.s
+
     Swal.fire({
       title: "Seguro que desea eliminar?",
       text: "Cuidado el dato del usuario sera eliminado del sistema!",
