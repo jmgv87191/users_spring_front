@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import Swal from 'sweetalert2';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharingDataService } from '../services/sharing-data.service';
 
@@ -19,19 +19,16 @@ export class UserAppComponent implements OnInit {
 
 
   users:User[] = [];
-  userSelected:User;
 
-  constructor( private _userService:UserService,
-              private sharingData: SharingDataService
+  constructor( private router:Router,
+    private _userService:UserService,
+    private sharingData: SharingDataService
 
-  ){ 
-    this.userSelected = new User;
-  }
+  ){}
 
   ngOnInit(): void {
     this._userService.findAll().subscribe(users => this.users = users);
     this.addUser();
-    this.setSelectedUser()
     this.removeUser()
 
   }
@@ -45,17 +42,14 @@ export class UserAppComponent implements OnInit {
       }else{
         this.users = [...this.users,{...user, id:new Date().getTime()}]
       }
-  
+      this.router.navigate(['/users'],{state:{users:this.users}})
+
       Swal.fire({
         title: "Guardado!",
         text: "Usuario guardado con exito!",
         icon: "success"
       });
     })
-
-
-    this.userSelected = new User();
-
   }
 
   removeUser( ):void{
@@ -73,7 +67,10 @@ export class UserAppComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.users = this.users.filter(user => user.id != id);
-  
+          this.router.navigate(['/users/create'],{skipLocationChange: true}).then(()=>{
+            this.router.navigate(['/users'],{state:{users:this.users}})
+          })
+          
           Swal.fire({
             title: "Eliminado!",
             text: "Usuario eliminado con exito",
@@ -87,11 +84,7 @@ export class UserAppComponent implements OnInit {
 
   }
 
-  setSelectedUser():void{
-    this.sharingData.selectedUserEventEmitter.subscribe(userRow=>{
-      this.userSelected = {...userRow}
-    })
-  }
+
 
 
 

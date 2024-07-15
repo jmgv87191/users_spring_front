@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/users';
 import { SharingDataService } from '../../services/sharing-data.service';
@@ -12,18 +12,20 @@ import { Router } from '@angular/router';
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
 
   user:User;
 
 
-  constructor( private router:Router,
+  constructor( 
+    private router:Router,
     private sharingData: SharingDataService ){
-    if (this.router.getCurrentNavigation()?.extras.state) {
-      this.user = this.router.getCurrentNavigation()?.extras.state!['user']
-    }else{
-      this.user = new User();
-    }
+    this.user = new User();
+
+
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
   onSubmit(userForm:NgForm):void{
