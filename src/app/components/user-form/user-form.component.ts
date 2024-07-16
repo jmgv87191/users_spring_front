@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/users';
 import { SharingDataService } from '../../services/sharing-data.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -18,14 +18,22 @@ export class UserFormComponent implements OnInit {
 
 
   constructor( 
-    private router:Router,
+    private aRoute:ActivatedRoute,
     private sharingData: SharingDataService ){
     this.user = new User();
 
 
   }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
+    this.sharingData.selectUserEventEmitter.subscribe(user => this.user = user)
+
+    this.aRoute.paramMap.subscribe(params =>{
+      const id: number = +(params.get('id') || '0')
+      if (id > 0) {
+        this.sharingData.findUserByIdEventEmitter.emit(id);
+      }
+    })
   }
 
   onSubmit(userForm:NgForm):void{
