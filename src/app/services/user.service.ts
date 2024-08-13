@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
 
   private users: User[] = []
-  private url: string =  'http://localhost:8080/api/users' 
+  private url: string =  'http://localhost:8090/api/users' 
 
   constructor( private http:HttpClient ) { }
 
@@ -28,6 +28,10 @@ export class UserService {
 
   update( user: User ):Observable<User>{
     return this.http.put<User>( this.url +'/'+ user.id, user )
+  }
+
+  remove( id: number ):Observable<void>{
+    return this.http.delete<void>( this.url + '/' + id  )
   }
 
 } 
