@@ -58,8 +58,7 @@ export class UserAppComponent implements OnInit {
 
         })
       }
-/*       this.router.navigate(['/users'])
- */
+
       Swal.fire({
         title: "Guardado!",
         text: "Usuario guardado con exito!",
@@ -86,7 +85,7 @@ export class UserAppComponent implements OnInit {
           this._userService.remove(id).subscribe(()=>{
             this.users = this.users.filter(user => user.id != id);
             this.router.navigate(['/users/create'],{skipLocationChange: true}).then(()=>{
-              this.router.navigate(['/users'])
+          this.router.navigate(['/users'], {state: {users: this.users} })
           })
 
           })
