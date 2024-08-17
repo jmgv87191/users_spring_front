@@ -52,7 +52,8 @@ export class UserAppComponent implements OnInit {
 
         },
       error:( err )=>{
-        console.log(err.error)
+        // console.log(err.error)
+        this.sharingData.errorsUserFormEventEmitter.emit( err.error );
       }})
       }else{
         this._userService.create(user).subscribe({
@@ -63,7 +64,8 @@ export class UserAppComponent implements OnInit {
 
         },
       error:(err)=>{
-        console.log( err.error )
+        // console.log( err.error )
+        this.sharingData.errorsUserFormEventEmitter.emit( err.error );
       }})
       }
 
