@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharingDataService } from '../services/sharing-data.service';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-user-app',
@@ -45,18 +46,25 @@ export class UserAppComponent implements OnInit {
     this.sharingData.newUserEventEmitter.subscribe((user)=>{
 
       if (user.id > 0 ) {
-        this._userService.update(user).subscribe(userUpdated =>{
+        this._userService.update(user).subscribe({ next: (userUpdated) =>{
           this.users = this.users.map( u => (u.id == userUpdated.id)? { ...userUpdated }:u)
           this.router.navigate(['/users'], {state: {users: this.users} })
 
-        } )
+        },
+      error:( err )=>{
+        console.log(err.error)
+      }})
       }else{
-        this._userService.create(user).subscribe(userNew =>{
+        this._userService.create(user).subscribe({
+          next:userNew =>{
           console.log( userNew)
           this.users = [...this.users,{...userNew}]
           this.router.navigate(['/users'], {state: {users: this.users} })
 
-        })
+        },
+      error:(err)=>{
+        console.log( err.error )
+      }})
       }
 
       Swal.fire({

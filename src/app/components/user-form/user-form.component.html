@@ -15,7 +15,7 @@
                         placeholder="name"
                         [(ngModel)]="user.name"
                         class="form-control my-2"
-                        required
+                        
                         #name = "ngModel"
                         >
                         @if ( name.invalid && (name.dirty || name.touched) ) {
@@ -33,7 +33,7 @@
                         placeholder="Lastname"
                         [(ngModel)]="user.lastname"
                         class="form-control my-2"
-                        required
+                        
                         #lastname = "ngModel"
                         >
                         @if ( lastname.invalid && (lastname.dirty || lastname.touched) ) {
@@ -50,7 +50,7 @@
                         placeholder="Email"
                         [(ngModel)]="user.email"
                         class="form-control my-2"
-                        required
+                        
                         type="email"
                         #email = "ngModel"
                         >
@@ -73,8 +73,8 @@
                         placeholder="Username"
                         [(ngModel)]="user.username"
                         class="form-control my-2"
-                        required
-                        minlength="8"
+                        
+                        
                         #username = "ngModel"
                         >
                         @if ( username.invalid && (username.dirty || username.touched) ) {
@@ -95,8 +95,8 @@
                         placeholder="Password"
                         [(ngModel)]="user.password"
                         class="form-control my-2"
-                        required
-                        minlength="6"
+                        
+                        
                         #password = "ngModel"
                         >
                         @if ( password.invalid && (password.dirty || password.touched) ) {
