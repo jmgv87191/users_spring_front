@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import Swal from 'sweetalert2';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharingDataService } from '../services/sharing-data.service';
 import { error } from 'node:console';
@@ -23,12 +23,17 @@ export class UserAppComponent implements OnInit {
 
   constructor( private router:Router,
     private _userService:UserService,
-    private sharingData: SharingDataService
+    private sharingData: SharingDataService,
+    private aRoute:ActivatedRoute
 
   ){}
 
   ngOnInit(): void {
-    this._userService.findAll().subscribe(users => this.users = users);
+    // this._userService.findAll().subscribe(users => this.users = users);
+    this.aRoute.paramMap.subscribe( params =>{
+      const page = +(params.get('page') || '0')
+      this._userService.findAllpageable( page ).subscribe( pageable => this.users = pageable.content as User[]);
+    } )
     this.addUser();
     this.removeUser();
     this.findUserById();

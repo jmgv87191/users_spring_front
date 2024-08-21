@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { User } from '../../models/users';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SharingDataService } from '../../services/sharing-data.service';
 
@@ -16,11 +16,13 @@ export class UserComponent implements OnInit {
   title: string = 'Listado de usuarios'
 
   users:User[] = []
+  userService: any;
 
 
   constructor( private router:Router,
     private service: UserService,
-    private sharingData: SharingDataService
+    private sharingData: SharingDataService,
+    private aRoute: ActivatedRoute
   ){
 
     if (this.router.getCurrentNavigation()?.extras.state) {
@@ -34,9 +36,14 @@ export class UserComponent implements OnInit {
 
     if (this.users==undefined || this.users==null || this.users.length == 0) {
       console.log('consulta findALl')
-      this.service.findAll().subscribe( (users) => {
+
+/*       this.service.findAll().subscribe( (users) => {
         this.users = users
-      } )
+      } ) */
+        this.aRoute.paramMap.subscribe( params =>{
+          const page = +(params.get('page') || '0')
+          this.service.findAllpageable( page ).subscribe( pageable => this.users = pageable.content as User[]);
+        } )
       
     }
 
