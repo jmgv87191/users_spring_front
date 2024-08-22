@@ -1,13 +1,14 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { User } from '../../models/users';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SharingDataService } from '../../services/sharing-data.service';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [ RouterLink ],
+  imports: [ RouterLink, RouterModule, PaginatorComponent  ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -16,7 +17,8 @@ export class UserComponent implements OnInit {
   title: string = 'Listado de usuarios'
 
   users:User[] = []
-  userService: any;
+  paginator: any = {};
+  pageUrl: string = '/users/page'
 
 
   constructor( private router:Router,
@@ -42,7 +44,13 @@ export class UserComponent implements OnInit {
       } ) */
         this.aRoute.paramMap.subscribe( params =>{
           const page = +(params.get('page') || '0')
-          this.service.findAllpageable( page ).subscribe( pageable => this.users = pageable.content as User[]);
+          console.log(page)
+
+          this.service.findAllpageable( page ).subscribe( pageable => {
+            this.users = pageable.content as User[]
+            this.paginator = pageable;
+            this.sharingData.pageUsersEventEmitter.emit({users: this.users, paginator:this.paginator})
+          });
         } )
       
     }
