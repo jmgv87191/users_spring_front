@@ -65,7 +65,7 @@ export class UserAppComponent implements OnInit {
       if (user.id > 0 ) {
         this._userService.update(user).subscribe({ next: (userUpdated) =>{
           this.users = this.users.map( u => (u.id == userUpdated.id)? { ...userUpdated }:u)
-          this.router.navigate(['/users'], {
+          this.router.navigate([''], {
             state: {
               users: this.users,
               paginator: this.paginator
@@ -134,7 +134,12 @@ export class UserAppComponent implements OnInit {
           this._userService.remove(id).subscribe(()=>{
             this.users = this.users.filter(user => user.id != id);
             this.router.navigate(['/users/create'],{skipLocationChange: true}).then(()=>{
-          this.router.navigate([''], {state: {users: this.users} })
+          this.router.navigate([''], {
+            state: {
+              users: this.users,
+              paginator: this.paginator
+
+            } })
           })
 
           })
